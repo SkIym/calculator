@@ -34,6 +34,7 @@ acButton.onclick = () => {
 // Backspace
 delButton.onclick = () => {
     displayedNumber = calcDisplay.innerHTML
+
     if (displayedNumber == tempAnswer || displayedNumber == '0') {
         calcDisplay.innerHTML = 0;
         clearSignals()
@@ -47,32 +48,50 @@ delButton.onclick = () => {
             let fnumArray = Array.from(num1);
             fnumArray.pop();
             num1 = fnumArray.join("");
-            // console.log(num1)
+            console.log(num1)
+            if (num1 == "") {
+                inputtingNumber = false;
+                calcDisplay.innerHTML = 0;
+                break;
+            }
             calcDisplay.innerHTML = num1;
             break;
 
         case 2:
             op = "";
-            opExists = !opExists;
-            // console.log(tempAnswer)
+            opExists = !opExists;   
+            console.log("Curretn asnwer:", tempAnswer)
             input = 1;
             break;
 
         default:
+
+            if (num2 == "") {
+                calcDisplay.innerHTML = num1;
+                tempAnswer = num1;
+                input = 2;
+                break;
+            }
+
             let snumArray = Array.from(num2);
             snumArray.pop();
             num2 = snumArray.join("");
-            // console.log(num2)
-
-            calcDisplay.innerHTML = num2;
-            tempAnswer = operate(parseFloat(num1), parseFloat(num2), op);
-            // console.log(tempAnswer)
+            console.log(num2)
 
             if (num2 == "") {
-                input = 2;
+                calcDisplay.innerHTML = num1;
+                inputtingNumber = false;
             }
+            else {
+                calcDisplay.innerHTML = num2;
+            }
+            tempAnswer = operate(parseFloat(num1), parseFloat(num2), op);
+            console.log("Curretn asnwer:", tempAnswer)
+
+            
             break;
     }
+    console.log("input mode", input)
 }
 
 // Change display to answer
