@@ -1,0 +1,27 @@
+
+main {
+    margin: 2em auto 2em auto;
+    width: 400px;
+}
+
+button {
+    height: 4em;
+}
+
+#num-display {
+    font-size: 4em;
+    text-align: end;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 0.3em;
+    grid-auto-flow: row dense;
+}
+
+#answer {
+    grid-column: 4/-1;
+    grid-row: 4;
+}
