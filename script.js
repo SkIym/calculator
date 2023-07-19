@@ -34,29 +34,45 @@ acButton.onclick = () => {
 // Backspace
 delButton.onclick = () => {
     displayedNumber = calcDisplay.innerHTML
-    if (displayedNumber == tempAnswer) {
+    if (displayedNumber == tempAnswer || displayedNumber == '0') {
         calcDisplay.innerHTML = 0;
         clearSignals()
         tempAnswer = undefined;
         return
     }
 
-    // switch(input) {
-    //     case 1:
+    switch(input) {
 
+        case 1:
+            let fnumArray = Array.from(num1);
+            fnumArray.pop();
+            num1 = fnumArray.join("");
+            // console.log(num1)
+            calcDisplay.innerHTML = num1;
+            break;
 
-    //         break;
-    //     case 2:
+        case 2:
+            op = "";
+            opExists = !opExists;
+            // console.log(tempAnswer)
+            input = 1;
+            break;
 
-    //         input = 1;
-    //         break;
-    //     default:
+        default:
+            let snumArray = Array.from(num2);
+            snumArray.pop();
+            num2 = snumArray.join("");
+            // console.log(num2)
 
-    //         input = 2;
-    //         break;
-    // }
-    
-    
+            calcDisplay.innerHTML = num2;
+            tempAnswer = operate(parseFloat(num1), parseFloat(num2), op);
+            // console.log(tempAnswer)
+
+            if (num2 == "") {
+                input = 2;
+            }
+            break;
+    }
 }
 
 // Change display to answer
@@ -78,9 +94,6 @@ calcButtons.forEach((btn) => {
         btn.addEventListener("click", displayInput);
     }
     btn.addEventListener("click", storeInput);
-    btn.addEventListener("click", () => {
-
-    });
 });
 
 
@@ -127,6 +140,8 @@ function storeInput(e) {
         opExists = !opExists;
 
         op = n;
+
+        console.log(op)
 
         // If there's one already, set temporary answer as num1 for future operations
         if (tempAnswer || tempAnswer == 0) {
