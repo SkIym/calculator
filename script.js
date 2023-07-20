@@ -34,8 +34,10 @@ acButton.onclick = () => {
 // Backspace
 delButton.onclick = () => {
     displayedNumber = calcDisplay.innerHTML
-
-    if (displayedNumber == tempAnswer || displayedNumber == '0') {
+    
+    // first clause improve, it incorrectly resets the display!
+    
+    if (displayedNumber == '0') {
         calcDisplay.innerHTML = 0;
         clearSignals()
         tempAnswer = undefined;
@@ -59,19 +61,15 @@ delButton.onclick = () => {
 
         case 2:
             op = "";
-            opExists = !opExists;   
+
+            opExists = !opExists;
+            
             console.log("Curretn asnwer:", tempAnswer)
+            inputtingNumber = true;
             input = 1;
             break;
 
         default:
-
-            if (num2 == "") {
-                calcDisplay.innerHTML = num1;
-                tempAnswer = num1;
-                input = 2;
-                break;
-            }
 
             let snumArray = Array.from(num2);
             snumArray.pop();
@@ -81,17 +79,21 @@ delButton.onclick = () => {
             if (num2 == "") {
                 calcDisplay.innerHTML = num1;
                 inputtingNumber = false;
+                tempAnswer = num1;
+                input = 2;
+                break;
             }
             else {
                 calcDisplay.innerHTML = num2;
             }
+
             tempAnswer = operate(parseFloat(num1), parseFloat(num2), op);
             console.log("Curretn asnwer:", tempAnswer)
 
-            
             break;
     }
     console.log("input mode", input)
+    console.log(displayedNumber, op, fnumExists, snumExists, opExists)
 }
 
 // Change display to answer
