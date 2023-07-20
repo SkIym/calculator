@@ -7,6 +7,9 @@ let opExists = false;
 let inputtingNumber = false;
 let input = 1;
 
+// Initialize an array to remember history of the user's input for proper deletion
+let eqHistory = [];
+
 // Initialize number, operator, and answer variables
 let num1 = "";
 let num2 = "";
@@ -14,6 +17,7 @@ let op = "";
 let tempAnswer;
 
 const calcDisplay = document.getElementById("num-display");
+const eqDisplay = document.getElementById("eq-display");
 
 const calcButtons = document.querySelectorAll(".displayable");
 let numButtons = Array.from(document.querySelectorAll(".number"));
@@ -30,6 +34,10 @@ const calculate = document.getElementById("answer");
 // Clear display
 acButton.onclick = () => {
     calcDisplay.innerHTML = 0;
+
+    eqDisplay.innerHTML = "";
+    eqHistory = [];
+    
     clearSignals()
     tempAnswer = undefined;
 }
@@ -37,7 +45,13 @@ acButton.onclick = () => {
 // Backspace
 delButton.onclick = () => {
     displayedNumber = calcDisplay.innerHTML;
-    
+
+    // Auxiliary display
+    eqHistory.pop()
+    eqDisplay.innerHTML = eqHistory.join("");
+
+
+    // Main display
     if (displayedNumber == '0') {
         calcDisplay.innerHTML = 0;
         clearSignals()
@@ -60,7 +74,7 @@ delButton.onclick = () => {
                 calcDisplay.innerHTML = 0;
                 break;
             }
-
+            eqDisplay.innerHTML = num1; 
             calcDisplay.innerHTML = num1;
             break;
         
@@ -97,7 +111,7 @@ delButton.onclick = () => {
 
             calcDisplay.innerHTML = num2;
             tempAnswer = operate(parseFloat(num1), parseFloat(num2), op);
-            console.log("Curretn asnwer:", tempAnswer)
+            console.log(num1, op, num2, "Curretn asnwer:", tempAnswer)
             break;
     }
     console.log("input mode", input)
@@ -114,14 +128,14 @@ calculate.onclick = () => {
         calcDisplay.innerHTML = Number((tempAnswer).toFixed(6));
     }
     clearSignals()
+    
+    // Set auxiliary display to answer, equation history set to answer
+    eqDisplay.innerHTML = Number((tempAnswer).toFixed(6));
+    eqHistory = [tempAnswer];
 }
 
 calcButtons.forEach((btn) => {
-
-    // only display number inputs
-    if (numButtons.some(number => btn == number)) {
-        btn.addEventListener("click", displayInput);
-    }
+    btn.addEventListener("click", displayInput);
     btn.addEventListener("click", storeInput);
 
 });
@@ -198,13 +212,23 @@ function storeInput(e) {
 // Auxiliary functions
 
 function displayInput(e) {
-    if (inputtingNumber) {
-        calcDisplay.innerHTML = calcDisplay.innerHTML + `${e.target.value}`;
-    }   
-    else {
-        calcDisplay.innerHTML = `${e.target.value}`;
-        inputtingNumber = true;
+   
+    // display only numbers in the main display
+    if (numButtons.some(number => e.target == number)){
+
+        if (inputtingNumber) {
+            calcDisplay.innerHTML = calcDisplay.innerHTML + `${e.target.value}`;
+        }   
+        else {
+            calcDisplay.innerHTML = `${e.target.value}`;
+            inputtingNumber = true;
+        }
     }
+    
+    // display equation on the auxiliary display
+    eqHistory.push(`${e.target.value}`);
+    eqDisplay.innerHTML = eqHistory.join("");
+
 }
 
 function clearSignals() {

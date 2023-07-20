@@ -1,16 +1,23 @@
 
 main {
-    margin: 2em auto 2em auto;
-    width: 400px;
+    margin: 10em auto 2em auto;
+    width: 300px;
+    border: 1px solid black;
+    padding: 1em;
 }
 
 button {
     height: 4em;
 }
 
+#eq-display {
+    height: 1em;
+}
+
 #num-display {
     font-size: 4em;
     text-align: end;
+    height: 1.4em;
 }
 
 .grid-container {
