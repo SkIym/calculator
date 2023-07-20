@@ -37,7 +37,7 @@ acButton.onclick = () => {
 
     eqDisplay.innerHTML = "";
     eqHistory = [];
-    
+
     clearSignals()
     tempAnswer = undefined;
 }
@@ -78,7 +78,7 @@ delButton.onclick = () => {
             calcDisplay.innerHTML = num1;
             break;
         
-            // Operator is currently being modified
+        // Operator is currently being modified
         case 2:
 
             op = "";
@@ -94,6 +94,14 @@ delButton.onclick = () => {
 
         // Second number is currently being modified
         default:
+
+            // If user clicks del after getting an answer
+            if (displayedNumber == tempAnswer) {
+                calcDisplay.innerHTML = 0;
+                clearSignals()
+                tempAnswer = undefined;
+                break;
+            }
 
             let snumArray = Array.from(num2);
             snumArray.pop();
@@ -113,7 +121,10 @@ delButton.onclick = () => {
             tempAnswer = operate(parseFloat(num1), parseFloat(num2), op);
             console.log(num1, op, num2, "Curretn asnwer:", tempAnswer)
             break;
+
+        
     }
+
     console.log("input mode", input)
     console.log(displayedNumber, op, fnumExists, snumExists, opExists)
 }
@@ -121,17 +132,19 @@ delButton.onclick = () => {
 // Change display to answer
 calculate.onclick = () => {
     console.log(tempAnswer, "after =")
-    if (!tempAnswer && !(tempAnswer == 0)) {
+    if (tempAnswer === undefined && !(tempAnswer == 0)) {
         calcDisplay.innerHTML = "undefined";
+        eqDisplay.innerHTML = "undefined";
+        eqHistory = [];
     }
     else {
         calcDisplay.innerHTML = Number((tempAnswer).toFixed(6));
+
+        // Set auxiliary display to answer, equation history set to answer
+        eqDisplay.innerHTML = Number((tempAnswer).toFixed(6));
+        eqHistory = [tempAnswer];
     }
     clearSignals()
-    
-    // Set auxiliary display to answer, equation history set to answer
-    eqDisplay.innerHTML = Number((tempAnswer).toFixed(6));
-    eqHistory = [tempAnswer];
 }
 
 calcButtons.forEach((btn) => {
@@ -157,6 +170,9 @@ function storeInput(e) {
             // If user presses a number after getting an answer
             if (tempAnswer) {
                 tempAnswer = num1;
+
+                eqHistory = [tempAnswer];
+                eqDisplay.innerHTML = eqHistory.join("");
             }
 
             // Signal that the first number is being modified
@@ -239,6 +255,7 @@ function clearSignals() {
     num1 = "";
     num2 = "";
     op = "";
+    input = 1;
 }
 
 function add(num1, num2) {

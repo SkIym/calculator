@@ -1,30 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap');
 
 main {
     margin: 10em auto 2em auto;
     width: 300px;
-    border: 1px solid black;
-    padding: 1em;
+    border-radius: 0.3em;
+    box-shadow: 2px 2px 5px rgb(164, 164, 164);
+    padding: 1.5em;
 }
 
 button {
     height: 4em;
+    border: none;
+    border-radius: 1em;
+    border-bottom: 3px solid rgb(234, 234, 234);
+    user-select: none;
+    transition: 0.2s;
+    font-family: 'Inter', sans-serif;
+}
+
+button:active {
+    border-bottom: none;
+    box-shadow: 1px 1px 2px rgb(234, 234, 234);
+    transition: 0.2s;
+}
+
+button.number {
+    background-color: aliceblue;
+}
+
+button.number:active {
+    background-color: rgb(216, 238, 255);
+}
+
+button.operator {
+    background-color: rgb(224, 220, 252);
+    
+}
+
+button.operator:active {
+    background-color: rgb(203, 196, 254);
+
+}
+
+button.modify {
+    background-color: rgb(219, 253, 242);
+}
+
+button.modify:active {
+    background-color: rgb(181, 249, 227);
+}
+
+
+#head-display {
+    width: 100%;
+    word-wrap: break-word;
+    
 }
 
 #eq-display {
     height: 1em;
+    justify-self: start;
+    background-color: rgb(241, 246, 251);
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+    border-top: 1px solid rgb(234, 234, 234);
+    padding: 1em;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
 }
 
 #num-display {
-    font-size: 4em;
+    font-size: 3.5em;
+    display: block;
+    overflow: auto;
     text-align: end;
-    height: 1.4em;
+    background-color: rgb(241, 246, 251);
+    padding: 0 0.1em 0 0.1em;
+    margin-bottom: 0.4em;
+    margin-top: -0.2em;
+    border-radius: 0.2em;
+    border-bottom: 1px solid rgb(234, 234, 234);
+    font-family: 'Inter', sans-serif;
 }
 
 .grid-container {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(4, 1fr);
-    gap: 0.3em;
+    gap: 0.4em;
     grid-auto-flow: row dense;
 }
 
